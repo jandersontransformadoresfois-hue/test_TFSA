@@ -1,0 +1,139 @@
+==============================================================================
+                    INFORME DE INSPECCIÓN DE TRANSFORMADOR                    
+                      Generado: 29/8/2026, 3:12:39                            
+==============================================================================
+
+DATOS DEL TRANSFORMADOR
+------------------------------------------------------------------------------
+Fabricante                  : ACME
+Potencia (kVA)              : 112,50
+Serial                      : SN123
+Cliente                     : Cliente XYZ
+Fecha de fabricación        : 
+Frecuencia (Hz)             : 60,00
+Tensión primaria VL (V)     : 13.200,00
+Tensión primaria VF (V)     : 13.200,00
+Tensión secundaria VL (V)   : 240,00
+Tensión secundaria VF (V)   : 120,00
+Corriente primaria (A)      : 4,921
+Corriente secundaria (A)    : 270,633
+Tipo                        : Poste
+Grupo de conexión           : 
+Líquido aislante            : 
+
+PRUEBA DE RELACIÓN DE TRANSFORMACIÓN
+------------------------------------------------------------------------------
+Equipo usado: TTR-300
+ POS   Derivación      V.mín      V.máx
+   1    13.860,00   114,9225   116,0775
+   2    13.530,00   112,1862   113,3137
+   3    13.200,00   109,4500   110,5500
+   4    12.870,00   106,7138   107,7863
+   5    12.540,00   103,9775   105,0225
+
+  Fase A:
+     POS   Relación   I.excit.       Estado
+       1   115,8000     1,0000           OK
+       2   113,0000     1,0000           OK
+       3   110,0000     1,0000           OK
+       4   107,5000     1,0000           OK
+       5   104,7000     1,0000           OK
+  Fase B:
+     POS   Relación   I.excit.       Estado
+       1   115,9000     1,0200           OK
+       2   112,9000     1,0200           OK
+       3   110,0500     1,0500           OK
+       4   107,4000     1,0200           OK
+       5   104,6000     1,0200           OK
+  Fase C:
+     POS   Relación   I.excit.       Estado
+       1   116,0000     1,0100           OK
+       2   113,1000     1,0100           OK
+       3   112,0000     1,9000  FUERA RANGO
+       4   107,6000     1,0100           OK
+       5   104,8000     1,0100           OK
+
+Criterio: tolerancia ±0.5% sobre la relación nominal, evaluada por fase (IEEE Std C57.12.90).
+
+Diagnóstico:
+  - Relación de transformación FUERA de tolerancia en: TAP 3 - Fase C. Una relación fuera de tolerancia (±0.5%, IEEE Std C57.12.90) es indicio de posible cortocircuito entre espiras, conexión incorrecta del devanado o error de medición; se recomienda repetir la medición y, de persistir, complementar con prueba de resistencia de devanados y relación de corriente de excitación (guías CIGRE de diagnóstico de transformadores).
+  - Corriente de excitación con asimetría relevante entre fases en: TAP 3 (fase C más alta, +90%). Este patrón es un indicador de campo de uso extendido (asociado a IEEE C57.12.90 y guías CIGRE) de posible falla de espiras o de núcleo; se recomienda evaluación adicional.
+
+PRUEBA RESISTENCIA DE AISLAMIENTO
+------------------------------------------------------------------------------
+Equipo usado: Megger MIT-1025
+Temperatura del equipo: 25,0 °C   Factor de corrección a 20°C: 1,4000
+
+  [prim/sec]  Voltaje de prueba: 5000 V
+      t(min)      0.5        1        2        3        4        5        6        7        8        9       10
+      Medido    500,0    650,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0   1800,0
+     Corr20C    700,0    910,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0   2520,0
+    DAR (t1/t0.5): 1,300 [Aceptable]   PI (t10/t1): 2,769 [Buena]
+
+  [prim/tierra]  Voltaje de prueba: 0 V
+      t(min)      0.5        1        2        3        4        5        6        7        8        9       10
+      Medido      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0
+     Corr20C      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0
+    DAR (t1/t0.5): N/D [N/D]   PI (t10/t1): N/D [N/D]
+
+  [sec/tierra]  Voltaje de prueba: 0 V
+      t(min)      0.5        1        2        3        4        5        6        7        8        9       10
+      Medido      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0
+     Corr20C      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0      0,0
+    DAR (t1/t0.5): N/D [N/D]   PI (t10/t1): N/D [N/D]
+
+Criterios PI/DAR de referencia general asociados a IEEE Std 43, usualmente referenciado junto a C57.12.90.
+Diagnóstico:
+  - Resistencia de aislamiento: índices de polarización (PI) en rango Bueno/Excelente en las series evaluadas (criterio de referencia asociado a IEEE Std 43). El aislamiento no muestra indicios de humedad o contaminación relevante.
+
+PRUEBA DE RESISTENCIA DE DEVANADOS
+------------------------------------------------------------------------------
+Equipo usado: Micro-ohmmetro
+  Devanado BAJA
+    Fase 1  conexión=-           resultado=0,045000 Ω
+    Fase 2  conexión=-           resultado=0,046000 Ω
+    Fase 3  conexión=-           resultado=0,052000 Ω
+    Promedio=0,047667 Ω  Máximo=0,052000  Mínimo=0,045000
+    Desviación máx. vs. promedio=9.09%   Diferencia entre fases=14.69%
+
+  Devanado ALTA
+    Fase 1  conexión=-           resultado=12,000000 Ω
+    Fase 2  conexión=-           resultado=12,050000 Ω
+    Fase 3  conexión=-           resultado=12,020000 Ω
+    Promedio=12,023333 Ω  Máximo=12,050000  Mínimo=12,000000
+    Desviación máx. vs. promedio=0.22%   Diferencia entre fases=0.42%
+
+Criterio de referencia de campo / guías CIGRE: diferencia entre fases ≤ 2% -> OK; ≤ 5% -> revisar; superior -> fuera de rango.
+Diagnóstico (desviación máxima y diferencia entre fases vs. CIGRE):
+  - Devanado BAJA — Desviación máxima frente al promedio: 9.09% — supera el 5% (criterio de referencia CIGRE/campo), lo que sugiere posible falla localizada (contacto deficiente, espiras en corto o daño del devanado). Se recomienda investigación adicional.
+  - Devanado BAJA — Diferencia entre fases: 14.69% — supera el 5% (criterio de referencia CIGRE/campo), lo cual es indicio de desequilibrio significativo entre fases (posible falla de una fase específica del devanado). Se recomienda investigación adicional.
+  - Devanado ALTA — Desviación máxima frente al promedio: 0.22% — dentro del criterio de referencia CIGRE/campo (≤2%). Sin indicios de falla localizada.
+  - Devanado ALTA — Diferencia entre fases: 0.42% — dentro del criterio de referencia CIGRE/campo (≤2%). Devanados balanceados entre fases.
+
+PRUEBA DE RIGIDEZ DIELÉCTRICA
+------------------------------------------------------------------------------
+Equipo usado: Baur DTA-100C
+Método: ASTM D877 (gap 2.54 mm) - aceite en servicio
+Lecturas (kV): 35,0, 36,0, 34,0, 33,0, 37,0
+Promedio: 35,00 kV   Rango: 4,00 kV   Límite mínimo (ASTM D877 (gap 2.54 mm)): 23,0 kV
+Resultado: CUMPLE
+Diagnóstico:
+  - Rigidez dieléctrica del aceite: CUMPLE con el límite mínimo de 23 kV (ASTM D877 (gap 2.54 mm) - aceite en servicio). El aceite no presenta indicios de humedad, partículas conductoras o contaminación que comprometan su rigidez dieléctrica.
+
+SUGERENCIA DE DIAGNÓSTICO GENERAL
+------------------------------------------------------------------------------
+Interpretación consolidada de las 4 pruebas, con base en IEEE Std C57.12.90, IEEE Std C57.12.00, guías CIGRE de diagnóstico/mantenimiento de transformadores y ASTM D877/D1816.
+  - Relación de transformación FUERA de tolerancia en: TAP 3 - Fase C. Una relación fuera de tolerancia (±0.5%, IEEE Std C57.12.90) es indicio de posible cortocircuito entre espiras, conexión incorrecta del devanado o error de medición; se recomienda repetir la medición y, de persistir, complementar con prueba de resistencia de devanados y relación de corriente de excitación (guías CIGRE de diagnóstico de transformadores).
+  - Corriente de excitación con asimetría relevante entre fases en: TAP 3 (fase C más alta, +90%). Este patrón es un indicador de campo de uso extendido (asociado a IEEE C57.12.90 y guías CIGRE) de posible falla de espiras o de núcleo; se recomienda evaluación adicional.
+  - Resistencia de aislamiento: índices de polarización (PI) en rango Bueno/Excelente en las series evaluadas (criterio de referencia asociado a IEEE Std 43). El aislamiento no muestra indicios de humedad o contaminación relevante.
+  - Devanado BAJA — Desviación máxima frente al promedio: 9.09% — supera el 5% (criterio de referencia CIGRE/campo), lo que sugiere posible falla localizada (contacto deficiente, espiras en corto o daño del devanado). Se recomienda investigación adicional.
+  - Devanado BAJA — Diferencia entre fases: 14.69% — supera el 5% (criterio de referencia CIGRE/campo), lo cual es indicio de desequilibrio significativo entre fases (posible falla de una fase específica del devanado). Se recomienda investigación adicional.
+  - Devanado ALTA — Desviación máxima frente al promedio: 0.22% — dentro del criterio de referencia CIGRE/campo (≤2%). Sin indicios de falla localizada.
+  - Devanado ALTA — Diferencia entre fases: 0.42% — dentro del criterio de referencia CIGRE/campo (≤2%). Devanados balanceados entre fases.
+  - Rigidez dieléctrica del aceite: CUMPLE con el límite mínimo de 23 kV (ASTM D877 (gap 2.54 mm) - aceite en servicio). El aceite no presenta indicios de humedad, partículas conductoras o contaminación que comprometan su rigidez dieléctrica.
+
+OBSERVACIONES
+------------------------------------------------------------------------------
+Prueba automatizada completa de la PWA.
+
+==============================================================================
