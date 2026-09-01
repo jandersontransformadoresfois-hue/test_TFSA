@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="theme-color" content="#1565C0" />
+<title>Inspección de Transformadores</title>
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<link rel="icon" href="icons/icon-192.png" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Insp. Transformadores" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <h1>Inspección de Transformadores</h1>
+  <div class="topbar-actions">
+    <button id="btn-recalcular-todo" class="btn btn-secondary">Recalcular todo</button>
+    <button id="btn-exportar-txt" class="btn btn-secondary">Exportar TXT</button>
+    <button id="btn-exportar-pdf" class="btn btn-primary">Exportar PDF</button>
+    <button id="btn-nuevo" class="btn btn-danger-outline" title="Borra todos los datos e inicia un nuevo expediente">Nuevo</button>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs-nav">
+  <button class="tab-btn active" data-tab="tab-datos">1. Datos</button>
+  <button class="tab-btn" data-tab="tab-relacion">2. Relación</button>
+  <button class="tab-btn" data-tab="tab-aislamiento">3. Aislamiento</button>
+  <button class="tab-btn" data-tab="tab-devanados">4. Devanados</button>
+  <button class="tab-btn" data-tab="tab-dielectrica">5. Dieléctrica</button>
+  <button class="tab-btn" data-tab="tab-observaciones">6. Observaciones</button>
+  <button class="tab-btn" data-tab="tab-resumen">Resumen</button>
+  <button class="tab-btn" data-tab="tab-graficos">Gráficos</button>
+</nav>
+
+<main id="tabs-content">
+
+  <!-- ===================== 1. DATOS DEL TRANSFORMADOR ===================== -->
+  <section id="tab-datos" class="tab-panel active">
+    <h2>Datos del transformador</h2>
+    <div class="form-grid">
+      <label>Fabricante <input type="text" id="d-fabricante"></label>
+      <label>Serial <input type="text" id="d-serial"></label>
+      <label>Cliente <input type="text" id="d-cliente"></label>
+      <label>Fecha de fabricación <input type="text" id="d-fecha_fab" placeholder="dd/mm/aaaa"></label>
+      <label>Potencia (kVA) <input type="number" step="any" id="d-potencia_kva"></label>
+      <label>Frecuencia (Hz) <input type="number" step="any" id="d-frecuencia" value="60"></label>
+      <label>Tensión primaria VL (V) <input type="number" step="any" id="d-tension_prim_vl"></label>
+      <label>Tensión primaria VF (V) <input type="number" step="any" id="d-tension_prim_vf"></label>
+      <label>Tensión secundaria VL (V) <input type="number" step="any" id="d-tension_sec_vl"></label>
+      <label>Tensión secundaria VF (V) <input type="number" step="any" id="d-tension_sec_vf"></label>
+      <label>Tipo <input type="text" id="d-tipo" placeholder="poste/pedestal/estación/otro"></label>
+      <label>Grupo de conexión <input type="text" id="d-grupo_conexion"></label>
+      <label>Líquido aislante <input type="text" id="d-liquido_aislante"></label>
+    </div>
+    <button id="btn-calc-datos" class="btn btn-primary">Calcular corrientes</button>
+    <div class="result-box" id="datos-resultado">Corriente primaria: —<br>Corriente secundaria: —</div>
+  </section>
+
+  <!-- ===================== 2. RELACIÓN DE TRANSFORMACIÓN ===================== -->
+  <section id="tab-relacion" class="tab-panel">
+    <h2>Prueba de relación de transformación</h2>
+    <label class="full">Equipo usado <input type="text" id="rel-equipo"></label>
+
+    <h3>Derivación y tolerancia por TAP</h3>
+    <div class="table-wrap">
+      <table id="tabla-ref-relacion" class="tabla">
+        <thead><tr><th>POS</th><th>Derivación (V)</th><th>V.mín</th><th>V.máx</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="fases-grid" id="fases-relacion-container"></div>
+
+    <div class="actions-row">
+      <button id="btn-calc-relacion" class="btn btn-primary">Calcular sección</button>
+      <button id="btn-limpiar-relacion" class="btn btn-secondary">Repetir / limpiar sección</button>
+      <span class="hint">Criterio: tolerancia ±0.5% sobre la relación nominal, por fase (IEEE C57.12.90).</span>
+    </div>
+    <div class="diag-box" id="diag-relacion">Calcule la sección para ver el diagnóstico.</div>
+  </section>
+
+  <!-- ===================== 3. RESISTENCIA DE AISLAMIENTO ===================== -->
+  <section id="tab-aislamiento" class="tab-panel">
+    <h2>Prueba resistencia de aislamiento</h2>
+    <div class="form-grid">
+      <label>Equipo usado <input type="text" id="aisl-equipo"></label>
+      <label>Temperatura del equipo (°C) <input type="number" step="any" id="aisl-temp" value="20"></label>
+    </div>
+    <div class="result-box" id="aisl-factor">Factor de corrección: —</div>
+
+    <div id="aisl-series-container"></div>
+
+    <div class="actions-row">
+      <button id="btn-calc-aislamiento" class="btn btn-primary">Calcular sección</button>
+      <button id="btn-limpiar-aislamiento" class="btn btn-secondary">Repetir / limpiar sección</button>
+      <span class="hint">DAR = R(1min)/R(30s) — PI = R(10min)/R(1min) — ref. IEEE Std 43</span>
+    </div>
+  </section>
+
+  <!-- ===================== 4. RESISTENCIA DE DEVANADOS ===================== -->
+  <section id="tab-devanados" class="tab-panel">
+    <h2>Prueba de resistencia de devanados</h2>
+    <label class="full">Equipo usado <input type="text" id="dev-equipo"></label>
+    <div class="dev-grid" id="dev-container"></div>
+    <div class="actions-row">
+      <button id="btn-calc-devanados" class="btn btn-primary">Calcular sección</button>
+      <button id="btn-limpiar-devanados" class="btn btn-secondary">Repetir / limpiar sección</button>
+      <span class="hint">Diagnóstico vs. CIGRE: desviación máxima y diferencia entre fases evaluadas por separado.</span>
+    </div>
+  </section>
+
+  <!-- ===================== 5. RIGIDEZ DIELÉCTRICA ===================== -->
+  <section id="tab-dielectrica" class="tab-panel">
+    <h2>Prueba de rigidez dieléctrica</h2>
+    <div class="form-grid">
+      <label>Equipo usado <input type="text" id="diel-equipo"></label>
+      <label>Método (ASTM)
+        <select id="diel-metodo">
+          <option>ASTM D877 (gap 2.54 mm) - aceite nuevo</option>
+          <option selected>ASTM D877 (gap 2.54 mm) - aceite en servicio</option>
+          <option>ASTM D1816 (gap 1 mm) - aceite en servicio</option>
+          <option>ASTM D1816 (gap 2 mm) - aceite en servicio</option>
+        </select>
+      </label>
+    </div>
+    <div class="table-wrap">
+      <table id="tabla-dielectrica" class="tabla">
+        <thead><tr><th>Ensayo</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+        <tbody><tr id="diel-inputs-row"><td>V. ruptura (kV)</td></tr></tbody>
+      </table>
+    </div>
+    <div class="result-box" id="diel-resumen">Promedio: —   Rango: —   Límite mínimo: —</div>
+    <div class="result-box" id="diel-resultado">Resultado: —</div>
+    <div class="actions-row">
+      <button id="btn-calc-dielectrica" class="btn btn-primary">Calcular sección</button>
+      <button id="btn-limpiar-dielectrica" class="btn btn-secondary">Repetir / limpiar sección</button>
+      <span class="hint">Límites de referencia según ASTM D877 / ASTM D1816.</span>
+    </div>
+  </section>
+
+  <!-- ===================== 6. OBSERVACIONES ===================== -->
+  <section id="tab-observaciones" class="tab-panel">
+    <h2>Observaciones</h2>
+    <textarea id="obs-texto" rows="14" placeholder="Escriba aquí las observaciones de la inspección..."></textarea>
+    <button id="btn-guardar-obs" class="btn btn-primary">Guardar observaciones</button>
+  </section>
+
+  <!-- ===================== RESUMEN ===================== -->
+  <section id="tab-resumen" class="tab-panel">
+    <h2>Resumen</h2>
+    <div id="resumen-container"></div>
+  </section>
+
+  <!-- ===================== GRÁFICOS ===================== -->
+  <section id="tab-graficos" class="tab-panel">
+    <h2>Gráficos</h2>
+    <button id="btn-actualizar-graficos" class="btn btn-primary">Actualizar gráficos</button>
+
+    <h3>Relación de transformación</h3>
+    <div class="chart-box"><canvas id="chart-relacion-linea"></canvas></div>
+    <div class="chart-box"><canvas id="chart-relacion-barra"></canvas></div>
+
+    <h3>Resistencia de aislamiento</h3>
+    <div class="chart-box"><canvas id="chart-aisl-curva"></canvas></div>
+    <div class="chart-box"><canvas id="chart-aisl-barra"></canvas></div>
+
+    <h3>Resistencia de devanados</h3>
+    <div class="chart-box"><canvas id="chart-dev-baja"></canvas></div>
+    <div class="chart-box"><canvas id="chart-dev-alta"></canvas></div>
+
+    <h3>Rigidez dieléctrica</h3>
+    <div class="chart-box"><canvas id="chart-dielectrica"></canvas></div>
+  </section>
+
+</main>
+
+<div id="toast" class="toast"></div>
+
+<script src="vendor/chart.umd.min.js"></script>
+<script src="vendor/jspdf.umd.min.js"></script>
+<script src="vendor/jspdf.plugin.autotable.min.js"></script>
+<script src="js/calculations.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/pdf-export.js"></script>
+<script src="js/txt-export.js"></script>
+<script src="js/app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>
